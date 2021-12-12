@@ -1,0 +1,7 @@
+#####** This file documents the changes made on this firmware **#####
+
+1. Added additional parameters to 'rc.mc_defaults' at Firmware_1_12_1_octa/PX4-Autopilot/ROMFS/px4fmu_common/init.d
+
+
+
+

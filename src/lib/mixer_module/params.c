@@ -33,3 +33,21 @@ PARAM_DEFINE_INT32(MC_AIRMODE, 0);
  * @group Mixer Output
  */
 PARAM_DEFINE_INT32(MOT_ORDERING, 0);
+
+/**
+ * Coaxial Allocation
+ *
+ * Parameter to select coaxial allocation that improves efficiency.
+ * #TODO Add parameters that define the allocation curve
+ *
+ * ONLY supported for coaxial multirotors with even numbers of coaxial rotor sets.
+ *
+ * When changing this, make sure to test the motor response without props first.
+ *
+ * @value 0 Not used
+ * @value 1 Used
+ *
+ * @group Mixer Output
+ */
+PARAM_DEFINE_INT32(COAX_ALLOC, 1);
+

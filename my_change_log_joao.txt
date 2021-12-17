@@ -1,6 +1,13 @@
 #####** This file documents the changes made on this firmware **#####
 
-1. Added additional parameters to 'rc.mc_defaults' at Firmware_1_12_1_octa/PX4-Autopilot/ROMFS/px4fmu_common/init.d
+1. Edited  the file /home/jsan819/Desktop/Firmware_1_11_octa/PX4-Autopilot/src/lib/mixer/MultirotorMixer/MultirotorMixer.cpp
+	- changed function mix_yaw to acomodate my control allocation for coaxial
+	313	void MultirotorMixer::mix_yaw(float yaw, float *outputs)
+	NOTE: The saturation functions are messing the control allocation
+
+2. Added a parameter in /home/jsan819/Desktop/Firmware_1_11_octa/PX4-Autopilot/src/lib/mixer_module/params.c
+	- a parameter to select if the coaxial control allocation is to be used or not
+
 
 
 

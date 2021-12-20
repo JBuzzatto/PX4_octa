@@ -316,45 +316,54 @@ MultirotorMixer::mix_airmode_disabled(float roll, float pitch, float yaw, float 
 
 void MultirotorMixer::mix_yaw(float yaw, float *outputs)
 {
-	// === My modifications START
-	// Perform my control allocation for coaxial before mixing yaw
-	//Define the parameters that define the Bezier curve (Cite the paper here)
-	float b_up_1 = 0.77; //these are params for the 16.2 inches prop
-	float b_up_2 = 0.1;
-	float b_lw_1 = 0.75;
-	float b_lw_2 = 0.81;
+	// // // === My modifications START
+	// // // Perform my control allocation for coaxial before mixing yaw
+	// // //Define the parameters that define the Bezier curve (Cite the paper here)
+	// // float b_up_x1 = 0.77; //these are params for the 16.2 inches prop z/D = 0.7
+	// // float b_up_x2 = 0.1;
+	// // float b_lw_y1 = 0.75;
+	// // float b_lw_y2 = 0.81;
 
-	//Set the rotor pair for a coaxial octa
-	float T_16 = outputs[0] + outputs[5];
-	float T_25 = outputs[1] + outputs[4];
-	float T_38 = outputs[2] + outputs[7];
-	float T_47 = outputs[3] + outputs[6];
+	// float b_up_x1 = 0.5546; //these are params for the 16.2 inches prop z/D = 0.25
+	// float b_up_x2 = 0.232;
+	// float b_lw_y1 = 0.804;
+	// float b_lw_y2 = 0.8361;
 
-	//Apply the control allocation to the rotor pairs
-	//General formula: T_up = 3*(1 - T_pair)*(1 - T_pair)*(T_pair*b_1) + 3*(1 - T_pair)*(T_pair*T_pair*b_2) + T_pair*T_pair*T_pair;
-	//For Pair 16
-	outputs_mine[0] = 3*(1 - T_16)*(1 - T_16)*(T_16*b_up_1) + 3*(1 - T_16)*(T_16*T_16*b_up_2) + T_16*T_16*T_16;
-	outputs_mine[5] = 3*(1 - T_16)*(1 - T_16)*(T_16*b_lw_1) + 3*(1 - T_16)*(T_16*T_16*b_lw_2) + T_16*T_16*T_16;
+	// //Set the rotor pair for a coaxial octa
+	// float T_16 = outputs[0] + outputs[5];
+	// float T_25 = outputs[1] + outputs[4];
+	// float T_38 = outputs[2] + outputs[7];
+	// float T_47 = outputs[3] + outputs[6];
 
-	//For Pair 25
-	outputs_mine[1] = 3*(1 - T_25)*(1 - T_25)*(T_25*b_up_1) + 3*(1 - T_25)*(T_25*T_25*b_up_2) + T_25*T_25*T_25;
-	outputs_mine[4] = 3*(1 - T_25)*(1 - T_25)*(T_25*b_lw_1) + 3*(1 - T_25)*(T_25*T_25*b_lw_2) + T_25*T_25*T_25;
+	// T_16 = T_16*0.5f;
+	// T_25 = T_25*0.5f;
+	// T_38 = T_38*0.5f;
+	// T_47 = T_47*0.5f;
 
-	//For Pair 38
-	outputs_mine[2] = 3*(1 - T_38)*(1 - T_38)*(T_38*b_up_1) + 3*(1 - T_38)*(T_38*T_38*b_up_2) + T_38*T_38*T_38;
-	outputs_mine[7] = 3*(1 - T_38)*(1 - T_38)*(T_38*b_lw_1) + 3*(1 - T_38)*(T_38*T_38*b_lw_2) + T_38*T_38*T_38;
 
-	//For Pair 47
-	outputs_mine[3] = 3*(1 - T_47)*(1 - T_47)*(T_47*b_up_1) + 3*(1 - T_47)*(T_47*T_47*b_up_2) + T_47*T_47*T_47;
-	outputs_mine[6] = 3*(1 - T_47)*(1 - T_47)*(T_47*b_lw_1) + 3*(1 - T_47)*(T_47*T_47*b_lw_2) + T_47*T_47*T_47;
+	// //Apply the control allocation to the rotor pairs
+	// //General formula: T_up = 3*(1 - T_pair)*(1 - T_pair)*(T_pair*b_1) + 3*(1 - T_pair)*(T_pair*T_pair*b_2) + T_pair*T_pair*T_pair;
+	// //For Pair 16
+	// outputs_mine[0] = 3*(1 - T_16)*(1 - T_16)*(T_16*b_up_x1) + 3*(1 - T_16)*(T_16*T_16*b_up_x2) + T_16*T_16*T_16;
+	// outputs_mine[5] = 3*(1 - T_16)*(1 - T_16)*(T_16*b_lw_y1) + 3*(1 - T_16)*(T_16*T_16*b_lw_y2) + T_16*T_16*T_16;
 
-	// === My modifications END
+	// //For Pair 25
+	// outputs_mine[1] = 3*(1 - T_25)*(1 - T_25)*(T_25*b_up_x1) + 3*(1 - T_25)*(T_25*T_25*b_up_x2) + T_25*T_25*T_25;
+	// outputs_mine[4] = 3*(1 - T_25)*(1 - T_25)*(T_25*b_lw_y1) + 3*(1 - T_25)*(T_25*T_25*b_lw_y2) + T_25*T_25*T_25;
+
+	// //For Pair 38
+	// outputs_mine[2] = 3*(1 - T_38)*(1 - T_38)*(T_38*b_up_x1) + 3*(1 - T_38)*(T_38*T_38*b_up_x2) + T_38*T_38*T_38;
+	// outputs_mine[7] = 3*(1 - T_38)*(1 - T_38)*(T_38*b_lw_y1) + 3*(1 - T_38)*(T_38*T_38*b_lw_y2) + T_38*T_38*T_38;
+
+	// //For Pair 47
+	// outputs_mine[3] = 3*(1 - T_47)*(1 - T_47)*(T_47*b_up_x1) + 3*(1 - T_47)*(T_47*T_47*b_up_x2) + T_47*T_47*T_47;
+	// outputs_mine[6] = 3*(1 - T_47)*(1 - T_47)*(T_47*b_lw_y1) + 3*(1 - T_47)*(T_47*T_47*b_lw_y2) + T_47*T_47*T_47;
+	// // === My modifications END
 
 	// Add yaw to outputs
 	for (unsigned i = 0; i < _rotor_count; i++) {
+		// outputs[i] = outputs_mine[i]; //my modification
 		outputs[i] += yaw * _rotors[i].yaw_scale;
-
-		outputs_yaw[i] = outputs[i]; //my modification
 
 		// Yaw will be used to unsaturate if needed
 		_tmp_array[i] = _rotors[i].yaw_scale;
@@ -362,14 +371,14 @@ void MultirotorMixer::mix_yaw(float yaw, float *outputs)
 
 	// Change yaw acceleration to unsaturate the outputs if needed (do not change roll/pitch),
 	// and allow some yaw response at maximum thrust
-	// minimize_saturation(_tmp_array, outputs, _saturation_status, 0.f, 1.2f); //Comment this if using my control allocation
+	minimize_saturation(_tmp_array, outputs, _saturation_status, 0.f, 1.2f); //Comment this if using my control allocation
 
 	for (unsigned i = 0; i < _rotor_count; i++) {
 		_tmp_array[i] = _rotors[i].thrust_scale;
 	}
 
 	// reduce thrust only
-	// minimize_saturation(_tmp_array, outputs, _saturation_status, 0.f, 1.f, true); //Comment this if using my control allocation
+	minimize_saturation(_tmp_array, outputs, _saturation_status, 0.f, 1.f, true); //Comment this if using my control allocation
 }
 
 unsigned
